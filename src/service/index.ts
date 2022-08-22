@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { MerchantInfoResponse } from '../types/index.d';
+import { camelizeKeys } from 'humps';
 
 export const getMerchantInfoApi = () =>
-  axios.get<MerchantInfoResponse>('https://us-central1-react-baemin.cloudfunctions.net/merchantInfo');
+  axios.get('https://us-central1-react-baemin.cloudfunctions.net/merchantInfo').then((res) => camelizeKeys(res.data));

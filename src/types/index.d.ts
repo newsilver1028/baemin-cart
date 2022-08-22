@@ -1,19 +1,19 @@
-export interface MerchantInfoResponse {
+export interface MerchantInfo {
   discounts: Discount[];
-  items: Item[];
-  merchant_name: string;
-  minimum_order_price: number;
+  items: Record<string, Item[]>;
+  marchantName: string;
+  minimumOrderPrice: number;
 }
 
 export interface Discount {
-  discount_rate: number;
+  discountRate: number;
   id: string;
   name: string;
 }
 
 export interface Item {
-  category_id: string;
-  category_name: string;
+  categoryId: string;
+  categoryName: string;
   id: string;
   name: string;
   price: number;
