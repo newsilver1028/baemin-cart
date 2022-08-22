@@ -6,19 +6,28 @@ import { BrowserRouter } from 'react-router-dom';
 import { ChakraProvider, ColorModeScript, theme } from '@chakra-ui/react';
 
 import App from './routes';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 const container = document.getElementById('root');
 if (!container) throw new Error('Failed to find the root element');
 const root = ReactDOM.createRoot(container);
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {},
+  },
+});
+
 root.render(
   <React.StrictMode>
-    <ColorModeScript />
-    <ChakraProvider theme={theme}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </ChakraProvider>
+    <QueryClientProvider client={queryClient}>
+      <ColorModeScript />
+      <ChakraProvider theme={theme}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </ChakraProvider>
+    </QueryClientProvider>
   </React.StrictMode>
 );
 
