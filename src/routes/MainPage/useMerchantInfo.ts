@@ -11,15 +11,16 @@ interface UseMerchantInfoReturn {
 export const useMerchantInfo = (): UseMerchantInfoReturn => {
   const { isLoading, data } = useQuery(['getMerchantInfoApi'], () => getMerchantInfoApi(), {
     onError(err) {
+      // 에러 모달로 보여주기
       console.log({ err });
     },
   });
 
   const formattedItems = data?.items.reduce((acc: Record<string, Item[]>, curr: Item) => {
-    if (!acc[curr.categoryId]) {
-      acc[curr.categoryId] = [];
+    if (!acc[curr.categoryName]) {
+      acc[curr.categoryName] = [];
     }
-    acc[curr.categoryId].push(curr);
+    acc[curr.categoryName].push(curr);
 
     return acc;
   }, {});
@@ -28,7 +29,7 @@ export const useMerchantInfo = (): UseMerchantInfoReturn => {
     isLoading,
     merchantData: {
       discounts: data?.discounts,
-      marchantName: data?.merchantData,
+      merchantName: data?.merchantData,
       minimumOrderPrice: data?.minimumOrderPrice,
       items: formattedItems,
     },

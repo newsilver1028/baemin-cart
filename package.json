@@ -9,6 +9,8 @@
     "axios": "^0.27.2",
     "framer-motion": "^6.5.1",
     "humps": "^2.0.1",
+    "immer": "^9.0.15",
+    "jotai": "^1.8.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^3.11.0",

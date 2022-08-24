@@ -1,16 +1,13 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
+
 import * as serviceWorker from './serviceWorker';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter } from 'react-router-dom';
-import { ChakraProvider, ColorModeScript, theme } from '@chakra-ui/react';
-
+import theme from './theme';
 import App from './routes';
-import { QueryClient, QueryClientProvider } from 'react-query';
-
-const container = document.getElementById('root');
-if (!container) throw new Error('Failed to find the root element');
-const root = ReactDOM.createRoot(container);
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -21,10 +18,14 @@ const queryClient = new QueryClient({
   },
 });
 
+const container = document.getElementById('root');
+if (!container) throw new Error('Failed to find the root element');
+const root = ReactDOM.createRoot(container);
+
 root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <ColorModeScript />
+      <ColorModeScript initialColorMode={theme.config.initialColorMode} />
       <ChakraProvider theme={theme}>
         <BrowserRouter>
           <App />

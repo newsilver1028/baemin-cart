@@ -1,4 +1,5 @@
 import * as React from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { render, RenderOptions } from '@testing-library/react';
 import { ChakraProvider, theme } from '@chakra-ui/react';
 

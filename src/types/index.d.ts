@@ -1,7 +1,7 @@
 export interface MerchantInfo {
   discounts: Discount[];
   items: Record<string, Item[]>;
-  marchantName: string;
+  merchantName: string;
   minimumOrderPrice: number;
 }
 
@@ -17,4 +17,10 @@ export interface Item {
   id: string;
   name: string;
   price: number;
+}
+
+export interface CartState {
+  name: string;
+  price: number;
+  quantity: number;
 }
