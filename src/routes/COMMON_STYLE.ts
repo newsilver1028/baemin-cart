@@ -1,3 +1,10 @@
 export const COMMON_STYLE = {
-  button: {},
+  button: {
+    bg: 'transparent',
+    _hover: { bg: 'transparent' },
+    _focus: { bg: 'transparent' },
+  },
+  heading: {
+    size: 'lg',
+  },
 };
