@@ -29,7 +29,7 @@ export const useMerchantInfo = (): UseMerchantInfoReturn => {
     isLoading,
     merchantData: {
       discounts: data?.discounts,
-      merchantName: data?.merchantData,
+      merchantName: data?.merchantName,
       minimumOrderPrice: data?.minimumOrderPrice,
       items: formattedItems,
     },
