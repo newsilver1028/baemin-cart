@@ -1,4 +1,6 @@
+import { Link } from 'react-router-dom';
 import { Button, Flex, useColorModeValue } from '@chakra-ui/react';
+import { FaChevronRight } from 'react-icons/fa';
 
 import { COMMON_STYLE } from '../../COMMON_STYLE';
 import { HEADER_STYLE } from './HEADER_STYLE';
@@ -8,7 +10,11 @@ const Header = () => {
 
   return (
     <Flex {...HEADER_STYLE.header} bg={itemColor}>
-      <Button {...COMMON_STYLE.button}>{'>'}</Button>
+      <Link to='/'>
+        <Button {...COMMON_STYLE.button}>
+          <FaChevronRight />
+        </Button>
+      </Link>
     </Flex>
   );
 };

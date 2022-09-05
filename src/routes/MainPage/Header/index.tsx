@@ -1,4 +1,5 @@
 import { Button, Flex, Heading, useColorMode, useColorModeValue } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 import { COMMON_STYLE } from '../../COMMON_STYLE';
 import { HEADER_STYLE } from './HEADER_STYLE';
 
@@ -16,9 +17,11 @@ const Header = ({ merchantName }: Props) => {
       <Button type='button' onClick={toggleColorMode} {...COMMON_STYLE.button}>
         Mode
       </Button>
-      <Button type='button' {...COMMON_STYLE.button}>
-        Cart
-      </Button>
+      <Link to='/cart'>
+        <Button type='button' {...COMMON_STYLE.button}>
+          Cart
+        </Button>
+      </Link>
     </Flex>
   );
 };

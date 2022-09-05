@@ -15,14 +15,17 @@ interface Props {
 
 const FoodItem = ({ name, items, onClickItem }: Props) => {
   const itemColor = useColorModeValue('white', 'gray.900');
+  const hoverColor = useColorModeValue('#EDF2F7', '#1A202C');
 
   return (
-    <ListItem {...COMMON_STYLE.itemWrapper} p='20px' bgColor={itemColor}>
-      <Heading {...FOOD_ITEM_STYLE.category}>{name}</Heading>
+    <ListItem {...COMMON_STYLE.itemWrapper} bgColor={itemColor}>
+      <Heading {...FOOD_ITEM_STYLE.category} p='20px'>
+        {name}
+      </Heading>
       <List>
         {items.map((t) => {
           return (
-            <ListItem key={t.id} {...FOOD_ITEM_STYLE.item}>
+            <ListItem key={t.id} {...FOOD_ITEM_STYLE.item} _hover={{ bg: hoverColor }} p='20px'>
               <Button
                 type='button'
                 onClick={onClickItem}

@@ -3,7 +3,8 @@ import { MotionProps } from 'framer-motion';
 export const DISCOUNTS_STYLE = {
   title: {
     size: 'md',
-    my: '10px',
+    mt: '10px',
+    mb: '20px',
   },
   item: {
     display: 'flex',
@@ -19,5 +20,8 @@ export const DISCOUNTS_STYLE = {
   priceText: {
     color: 'red',
     mt: '5px',
+  },
+  totalPrice: {
+    mt: '10px',
   },
 };
