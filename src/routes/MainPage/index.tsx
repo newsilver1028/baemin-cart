@@ -1,25 +1,24 @@
 import { MouseEventHandler } from 'react';
+import { Box, Center, Heading, List, Spinner, useColorModeValue } from '@chakra-ui/react';
 import { useSetAtom } from 'jotai';
-import { Box, Button, Center, Flex, Heading, List, Spinner, useColorMode, useColorModeValue } from '@chakra-ui/react';
 
 import { cartAtom } from '../../store';
 import { useMerchantInfo } from './useMerchantInfo';
 import FoodItem from './FoodItem';
-import { COMMON_STYLE } from '../COMMON_STYLE';
+import Header from './Header';
+
 import { MAIN_PAGE_STYLE } from './MAIN_PAGE_STYLE';
 
 // temp
 import CartPage from '../CartPage';
-import Discounts from '../CartPage/Discounts';
 
 const MainPage = () => {
   // const [isOpen, setIsOpen] = useState(false);
   // const onOpen = () => {
   //   setIsOpen((prev) => !prev);
   // };
-  const { toggleColorMode } = useColorMode();
-  const bg = useColorModeValue('white', 'gray.800');
-  const appBg = useColorModeValue('gray.100', 'gray.600');
+  const bg = useColorModeValue('gray.200', 'gray.800');
+  const appBg = useColorModeValue('gray.100', 'gray.800');
 
   const setCartList = useSetAtom(cartAtom);
   const onClickItem: MouseEventHandler<HTMLButtonElement> = (e) => {
@@ -37,8 +36,8 @@ const MainPage = () => {
 
   if (!merchantData || isLoading) {
     return (
-      <Center>
-        <Box {...MAIN_PAGE_STYLE.container}>
+      <Center bg={bg} {...MAIN_PAGE_STYLE.wrapper}>
+        <Box {...MAIN_PAGE_STYLE.container} bg={appBg}>
           <Spinner thickness='4px' speed='0.65s' color='white' size='xl' />
         </Box>
       </Center>
@@ -46,22 +45,15 @@ const MainPage = () => {
   }
 
   return (
-    <Center bg={bg}>
+    <Center bg={bg} {...MAIN_PAGE_STYLE.wrapper}>
       <Box {...MAIN_PAGE_STYLE.container} bg={appBg}>
-        <CartPage />
-        <Flex {...MAIN_PAGE_STYLE.header}>
-          <Heading {...COMMON_STYLE.heading}>{merchantData.merchantName}</Heading>
-          <Button type='button' onClick={toggleColorMode} {...COMMON_STYLE.button}>
-            Mode
-          </Button>
-        </Flex>
+        <Header merchantName={merchantData.merchantName} />
+        <CartPage discounts={merchantData.discounts} />
         <List>
           {Object.keys(merchantData.items).map((k) => (
             <FoodItem key={k} name={k} items={merchantData.items[k]} onClickItem={onClickItem} />
           ))}
         </List>
-        <Heading>Discounts</Heading>
-        {/* <Discounts items={merchantData.discounts} /> */}
       </Box>
     </Center>
   );
