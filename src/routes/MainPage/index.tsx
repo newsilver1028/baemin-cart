@@ -1,9 +1,10 @@
 import { MouseEventHandler } from 'react';
 import { useSetAtom } from 'jotai';
-import { List } from '@chakra-ui/react';
+import { List, useToast } from '@chakra-ui/react';
 
 import { cartAtom } from '../../store';
 import { useMerchantInfo } from './useMerchantInfo';
+
 import FoodItem from './FoodItem';
 import Header from './Header';
 import LoadingSpinner from '../components/LoadingSpinner.tsx';
@@ -12,12 +13,22 @@ import LoadingSpinner from '../components/LoadingSpinner.tsx';
 import CartPage from '../CartPage';
 
 const MainPage = () => {
+  const toast = useToast();
+
   const setCartList = useSetAtom(cartAtom);
   const onClickItem: MouseEventHandler<HTMLButtonElement> = (e) => {
     const selectedItem = e.currentTarget.dataset;
 
     setCartList((prev) => {
       if (prev.find((p) => p.name === selectedItem.name)) {
+        toast({
+          position: 'top',
+          title: '이미 등록된 상품입니다.',
+          status: 'warning',
+          duration: 1500,
+          variant: 'top-accent',
+          colorScheme: 'gray',
+        });
         return prev;
       }
       return [...prev, { name: String(selectedItem.name), price: Number(selectedItem.price), quantity: 1 }];

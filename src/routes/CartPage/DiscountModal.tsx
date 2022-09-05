@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useAtomValue } from 'jotai';
 import {
-  Box as Text,
+  Text,
   Checkbox,
   List,
   ListItem,

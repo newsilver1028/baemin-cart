@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   Checkbox,
+  Flex,
   Heading,
   List,
   ListItem,
@@ -12,15 +13,20 @@ import {
 } from '@chakra-ui/react';
 
 import { useMerchantInfo } from '../MainPage/useMerchantInfo';
+import { formattedKRWPrice } from '../utils';
 
 import LoadingSpinner from '../components/LoadingSpinner.tsx';
+import DiscountModal from './DiscountModal';
 import { COMMON_STYLE } from '../COMMON_STYLE';
 import { CART_LIST_STYLE } from './CART_LIST_STYLE';
 import { DISCOUNTS_STYLE } from './DISCOUNTS_STYLE';
-import DiscountModal from './DiscountModal';
+
+const disabled = false;
 
 const Discounts = () => {
   const itemColor = useColorModeValue('white', 'gray.900');
+  const borderColor = useColorModeValue('#EDF2F7', '#1A202C');
+
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { isLoading, merchantData } = useMerchantInfo();
@@ -74,9 +80,12 @@ const Discounts = () => {
           ))}
         </List>
       </Box>
-      <Box {...DISCOUNTS_STYLE.footer} bg={itemColor}>
-        <Text>총 주문금액</Text>
-      </Box>
+      <Flex {...DISCOUNTS_STYLE.footer} bg={itemColor} borderTop={`2px solid ${borderColor}`}>
+        <Button {...DISCOUNTS_STYLE.orderButton} disabled={disabled}>
+          <Text>{formattedKRWPrice(26000)}</Text>
+          <Text>배달 주문하기</Text>
+        </Button>
+      </Flex>
     </Box>
   );
 };

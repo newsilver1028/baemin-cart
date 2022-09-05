@@ -1,4 +1,4 @@
-import { FlexProps } from '@chakra-ui/react';
+import { BadgeProps, FlexProps } from '@chakra-ui/react';
 
 export const HEADER_STYLE = {
   header: {
@@ -13,4 +13,9 @@ export const HEADER_STYLE = {
   heading: {
     size: 'lg',
   },
+  badge: {
+    mt: '-10px',
+    w: '15px',
+    h: '15px',
+  } as BadgeProps,
 };

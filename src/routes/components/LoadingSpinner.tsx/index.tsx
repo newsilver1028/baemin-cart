@@ -1,4 +1,5 @@
 import { Box, Center, Spinner, useColorModeValue } from '@chakra-ui/react';
+
 import { MAIN_PAGE_STYLE } from '../../MainPage/MAIN_PAGE_STYLE';
 
 const LoadingSpinner = () => {

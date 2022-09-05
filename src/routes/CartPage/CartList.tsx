@@ -1,6 +1,8 @@
 import { MouseEventHandler } from 'react';
 import { useAtom } from 'jotai';
 import { Box, Button, Flex, List, ListItem, Text, useColorModeValue } from '@chakra-ui/react';
+import { CloseIcon, MinusIcon } from '@chakra-ui/icons';
+import { FaPlus } from 'react-icons/fa';
 
 import { formattedKRWPrice } from '../utils';
 import { cartAtom } from '../../store';
@@ -25,7 +27,7 @@ const CartList = () => {
           <Flex justify='space-between' alignItems='center'>
             <Text {...CART_LIST_STYLE.itemText}>{c.name}</Text>
             <Button type='button' onClick={onClickDelete} data-name={c.name} {...COMMON_STYLE.button}>
-              X
+              <CloseIcon />
             </Button>
           </Flex>
           <Flex justify='space-between' alignItems='center'>
@@ -33,11 +35,15 @@ const CartList = () => {
               {formattedKRWPrice(c.price)}
             </Text>
             <Flex {...CART_LIST_STYLE.controlWrapper} border={`2px solid ${borderColor}`}>
-              <Button {...COMMON_STYLE.button}>-</Button>
+              <Button {...COMMON_STYLE.button}>
+                <MinusIcon />
+              </Button>
               <Box {...CART_LIST_STYLE.quantity} border={`2px solid ${borderColor}`}>
                 {c.quantity}
               </Box>
-              <Button {...COMMON_STYLE.button}>+</Button>
+              <Button {...COMMON_STYLE.button}>
+                <FaPlus />
+              </Button>
             </Flex>
           </Flex>
         </ListItem>

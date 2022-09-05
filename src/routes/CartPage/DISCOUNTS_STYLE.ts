@@ -28,9 +28,16 @@ export const DISCOUNTS_STYLE = {
   footer: {
     position: 'fixed',
     bottom: '150px',
-    p: '20px',
+    px: '20px',
     w: '375px',
     h: '60px',
+    alignItems: 'center',
     borderBottomRadius: '20px',
   } as ChakraProps,
+  orderButton: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    px: '20px',
+    w: '100%',
+  },
 };
