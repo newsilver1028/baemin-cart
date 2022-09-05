@@ -29,9 +29,16 @@ interface Props {
 const DiscountModal = ({ title, isOpen, onClose }: Props) => {
   const cartList = useAtomValue(cartAtom);
 
-  const [checkedItems, setCheckedItems] = useState(Array(cartList.length).fill(true));
-  const allChecked = checkedItems.every(Boolean);
-  const isIndeterminate = checkedItems.some(Boolean) && !allChecked;
+  const initialValue = cartList.map((c) => c.name);
+  const [checkedItems, setCheckedItems] = useState(initialValue);
+  const allChecked = checkedItems.length === initialValue.length;
+  const onAllCheckedChange = () => {
+    if (allChecked) {
+      setCheckedItems([]);
+      return;
+    }
+    setCheckedItems(initialValue);
+  };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} {...DISCOUNTS_STYLE.modal}>
@@ -41,12 +48,7 @@ const DiscountModal = ({ title, isOpen, onClose }: Props) => {
         <ModalCloseButton />
         <ModalBody>
           <List>
-            <Checkbox
-              isChecked={allChecked}
-              isIndeterminate={isIndeterminate}
-              defaultChecked
-              onChange={(e) => setCheckedItems(Array(cartList.length).fill(e.target.checked))}
-            >
+            <Checkbox isChecked={allChecked} isIndeterminate={!allChecked} defaultChecked onChange={onAllCheckedChange}>
               <Text {...CART_LIST_STYLE.itemText}>전체 선택</Text>
             </Checkbox>
             {cartList.map((c, i) => (
@@ -54,12 +56,12 @@ const DiscountModal = ({ title, isOpen, onClose }: Props) => {
                 <Checkbox
                   value={c.name}
                   defaultChecked
-                  isChecked={checkedItems[i]}
+                  isChecked={checkedItems.includes(c.name)}
                   onChange={(e) =>
                     setCheckedItems((prev) => {
-                      const prevValue = [...prev];
-                      prevValue[i] = e.target.checked;
-                      return [...prevValue];
+                      const { value } = e.currentTarget;
+                      if (prev.includes(value)) return prev.filter((p) => p !== value);
+                      return [...prev, value];
                     })
                   }
                 >

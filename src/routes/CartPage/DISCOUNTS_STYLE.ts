@@ -1,3 +1,4 @@
+import { ChakraProps } from '@chakra-ui/react';
 import { MotionProps } from 'framer-motion';
 
 export const DISCOUNTS_STYLE = {
@@ -24,4 +25,12 @@ export const DISCOUNTS_STYLE = {
   totalPrice: {
     mt: '10px',
   },
+  footer: {
+    position: 'fixed',
+    bottom: '150px',
+    p: '20px',
+    w: '375px',
+    h: '60px',
+    borderBottomRadius: '20px',
+  } as ChakraProps,
 };

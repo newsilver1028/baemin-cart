@@ -32,7 +32,7 @@ const MainPage = () => {
 
   return (
     <>
-      <CartPage />
+      {/* <CartPage /> */}
       <Header merchantName={merchantData.merchantName} />
       <List>
         {Object.keys(merchantData.items).map((k) => (

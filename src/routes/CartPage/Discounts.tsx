@@ -25,39 +25,41 @@ const Discounts = () => {
 
   const { isLoading, merchantData } = useMerchantInfo();
 
-  const [checkedItems, setCheckedItems] = useState(Array(merchantData.discounts.length).fill(true));
-  const allChecked = checkedItems.every(Boolean);
-  const isIndeterminate = checkedItems.some(Boolean) && !allChecked;
+  const initialValue = merchantData.discounts.map((d) => d.name) ?? [];
+  const [checkedItems, setCheckedItems] = useState(initialValue);
+  const allChecked = checkedItems.length === initialValue.length;
+  const onAllCheckedChange = () => {
+    if (allChecked) {
+      setCheckedItems([]);
+      return;
+    }
+    setCheckedItems(initialValue);
+  };
 
   if (!merchantData || isLoading) {
     return <LoadingSpinner />;
   }
 
   return (
-    <>
-      <Box {...COMMON_STYLE.itemWrapper} p='20px' bg={itemColor}>
+    <Box>
+      <Box {...COMMON_STYLE.itemWrapper} position='relative' mb='80px' p='20px' bg={itemColor}>
         <Heading {...DISCOUNTS_STYLE.title}>할인</Heading>
         <List>
-          <Checkbox
-            isChecked={allChecked}
-            isIndeterminate={isIndeterminate}
-            defaultChecked
-            onChange={(e) => setCheckedItems(Array(merchantData.discounts.length).fill(e.target.checked))}
-          >
+          <Checkbox isChecked={allChecked} isIndeterminate={!allChecked} defaultChecked onChange={onAllCheckedChange}>
             <Text {...CART_LIST_STYLE.itemText}>전체 선택</Text>
           </Checkbox>
-
           {merchantData.discounts.map((d, i) => (
-            <>
-              <ListItem key={d.id} {...DISCOUNTS_STYLE.item}>
+            <Box key={d.id}>
+              <ListItem {...DISCOUNTS_STYLE.item}>
                 <Checkbox
+                  value={d.name}
                   defaultChecked
-                  isChecked={checkedItems[i]}
+                  isChecked={checkedItems.includes(d.name)}
                   onChange={(e) =>
                     setCheckedItems((prev) => {
-                      const prevValue = [...prev];
-                      prevValue[i] = e.target.checked;
-                      return [...prevValue];
+                      const { value } = e.currentTarget;
+                      if (prev.includes(value)) return prev.filter((p) => p !== value);
+                      return [...prev, value];
                     })
                   }
                 >
@@ -68,14 +70,14 @@ const Discounts = () => {
                 </Button>
               </ListItem>
               <DiscountModal title={d.name} isOpen={isOpen} onClose={onClose} />
-            </>
+            </Box>
           ))}
         </List>
       </Box>
-      <Box {...COMMON_STYLE.itemWrapper} p='20px' bg={itemColor}>
+      <Box {...DISCOUNTS_STYLE.footer} bg={itemColor}>
         <Text>총 주문금액</Text>
       </Box>
-    </>
+    </Box>
   );
 };
 
