@@ -2,16 +2,14 @@ import { Box } from '@chakra-ui/react';
 import { Discount } from '../../types/index.d';
 import CartList from './CartList';
 import Discounts from './Discounts';
+import Header from './Header';
 
-interface Props {
-  discounts: Discount[];
-}
-
-const CartPage = ({ discounts }: Props) => {
+const CartPage = () => {
   return (
     <Box>
+      <Header />
       <CartList />
-      <Discounts discounts={discounts} />
+      <Discounts />
     </Box>
   );
 };

@@ -3,7 +3,7 @@ export const HEADER_STYLE = {
     p: '10px 20px',
     justifyContent: 'space-between',
     alignItems: 'center',
-    h: '70px',
+    h: '60px',
   },
   heading: {
     size: 'lg',

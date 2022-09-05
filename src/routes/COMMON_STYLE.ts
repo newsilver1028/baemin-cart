@@ -6,7 +6,7 @@ export const COMMON_STYLE = {
     _focus: { bg: 'transparent' },
   },
   itemWrapper: {
-    my: '20px',
+    mt: '20px',
     w: '100%',
     h: '100%',
   },

@@ -19,7 +19,6 @@ const Header = ({ merchantName }: Props) => {
       <Button type='button' {...COMMON_STYLE.button}>
         Cart
       </Button>
-      {/* <Button> {...COMMON_STYLE.button}{'>'}</Button> */}
     </Flex>
   );
 };
