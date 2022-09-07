@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useAtomValue } from 'jotai';
+import { useAtom } from 'jotai';
 import {
   Box,
   Button,
@@ -29,18 +29,18 @@ const Discounts = () => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isLoading, merchantData } = useMerchantInfo();
-  const getTotalPrice = useAtomValue(totalPriceAtom);
+  const [getTotalPrice] = useAtom(totalPriceAtom);
   const disabled = getTotalPrice < merchantData.minimumOrderPrice;
 
   const initialValue = merchantData.discounts.map((d) => d.name) ?? [];
-  const [checkedItems, setCheckedItems] = useState(initialValue);
-  const allChecked = checkedItems.length === initialValue.length;
+  const [notCheckedItems, setNotCheckedItems] = useState<string[]>([]);
+  const allChecked = notCheckedItems.length === 0;
   const onAllCheckedChange = () => {
     if (allChecked) {
-      setCheckedItems([]);
+      setNotCheckedItems(initialValue);
       return;
     }
-    setCheckedItems(initialValue);
+    setNotCheckedItems([]);
   };
 
   if (!merchantData || isLoading) {
@@ -52,7 +52,7 @@ const Discounts = () => {
       <Box {...COMMON_STYLE.itemWrapper} position='relative' mb='80px' p='20px' bg={itemColor}>
         <Heading {...DISCOUNTS_STYLE.title}>할인</Heading>
         <List>
-          <Checkbox isChecked={allChecked} isIndeterminate={!allChecked} defaultChecked onChange={onAllCheckedChange}>
+          <Checkbox isChecked={!allChecked} isIndeterminate={allChecked} defaultChecked onChange={onAllCheckedChange}>
             <Text {...CART_LIST_STYLE.itemText}>전체 선택</Text>
           </Checkbox>
           {merchantData.discounts.map((d, i) => (
@@ -61,18 +61,18 @@ const Discounts = () => {
                 <Checkbox
                   value={d.name}
                   defaultChecked
-                  isChecked={checkedItems.includes(d.name)}
+                  isChecked={!notCheckedItems.includes(d.name)}
                   onChange={(e) =>
-                    setCheckedItems((prev) => {
+                    setNotCheckedItems((prev) => {
                       const { value } = e.currentTarget;
-                      if (prev.includes(value)) return prev.filter((p) => p !== value);
-                      return [...prev, value];
+                      if (prev.includes(value)) return [...prev, value];
+                      return prev.filter((p) => p !== value);
                     })
                   }
                 >
                   <Text {...CART_LIST_STYLE.itemText}>{d.name}</Text>
                 </Checkbox>
-                <Button onClick={onOpen} isDisabled={!checkedItems[i]}>
+                <Button onClick={onOpen} isDisabled={!!notCheckedItems[i]}>
                   메뉴 선택
                 </Button>
               </ListItem>

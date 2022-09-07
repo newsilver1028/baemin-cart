@@ -25,3 +25,8 @@ export interface CartState {
   quantity: number;
   priceByQuantity: number;
 }
+
+export interface DiscountState {
+  discountName: string;
+  items: string[];
+}

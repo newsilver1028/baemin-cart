@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useAtomValue } from 'jotai';
+import { useAtom } from 'jotai';
 import {
   Text,
   Checkbox,
@@ -27,7 +27,7 @@ interface Props {
 }
 
 const DiscountModal = ({ title, isOpen, onClose }: Props) => {
-  const cartList = useAtomValue(cartAtom);
+  const [cartList] = useAtom(cartAtom);
 
   const initialValue = cartList.map((c) => c.name);
   const [checkedItems, setCheckedItems] = useState(initialValue);

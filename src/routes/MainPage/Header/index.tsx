@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useAtomValue } from 'jotai';
+import { useAtom } from 'jotai';
 import { Badge, Button, Flex, Heading, Icon, useColorMode, useColorModeValue } from '@chakra-ui/react';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import { FaShoppingCart } from 'react-icons/fa';
@@ -17,7 +17,7 @@ const Header = ({ merchantName }: Props) => {
   const { toggleColorMode, colorMode } = useColorMode();
   const itemColor = useColorModeValue('white', 'gray.900');
 
-  const cartList = useAtomValue(cartAtom);
+  const [cartList] = useAtom(cartAtom);
 
   return (
     <Flex {...HEADER_STYLE.header} bg={itemColor}>
