@@ -23,5 +23,5 @@ export interface CartState {
   name: string;
   price: number;
   quantity: number;
-  priceByQuantity?: number;
+  priceByQuantity: number;
 }

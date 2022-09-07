@@ -9,13 +9,11 @@ import FoodItem from './FoodItem';
 import Header from './Header';
 import LoadingSpinner from '../components/LoadingSpinner.tsx';
 
-// temp
-import CartPage from '../CartPage';
-
 const MainPage = () => {
   const toast = useToast();
 
   const setCartList = useSetAtom(cartAtom);
+
   const onClickItem: MouseEventHandler<HTMLButtonElement> = (e) => {
     const selectedItem = e.currentTarget.dataset;
 
@@ -31,7 +29,15 @@ const MainPage = () => {
         });
         return prev;
       }
-      return [...prev, { name: String(selectedItem.name), price: Number(selectedItem.price), quantity: 1 }];
+      return [
+        ...prev,
+        {
+          name: String(selectedItem.name),
+          price: Number(selectedItem.price),
+          quantity: 1,
+          priceByQuantity: Number(selectedItem.price),
+        },
+      ];
     });
   };
 
@@ -43,7 +49,6 @@ const MainPage = () => {
 
   return (
     <>
-      {/* <CartPage /> */}
       <Header merchantName={merchantData.merchantName} />
       <List>
         {Object.keys(merchantData.items).map((k) => (

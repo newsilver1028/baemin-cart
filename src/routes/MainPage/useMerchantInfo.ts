@@ -1,4 +1,5 @@
 import { useQuery } from 'react-query';
+import { useToast } from '@chakra-ui/react';
 
 import { getMerchantInfoApi } from '../../service';
 import { Item, MerchantInfo } from '../../types/index.d';
@@ -9,10 +10,18 @@ interface UseMerchantInfoReturn {
 }
 
 export const useMerchantInfo = (): UseMerchantInfoReturn => {
+  const toast = useToast();
+
   const { isLoading, data } = useQuery(['getMerchantInfoApi'], () => getMerchantInfoApi(), {
     onError(err) {
-      // 에러 모달로 보여주기
-      console.log({ err });
+      toast({
+        position: 'top',
+        title: `${err}`,
+        status: 'warning',
+        duration: 1500,
+        variant: 'top-accent',
+        colorScheme: 'gray',
+      });
     },
   });
 

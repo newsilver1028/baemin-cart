@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useAtomValue } from 'jotai';
 import {
   Box,
   Button,
@@ -20,16 +21,16 @@ import DiscountModal from './DiscountModal';
 import { COMMON_STYLE } from '../COMMON_STYLE';
 import { CART_LIST_STYLE } from './CART_LIST_STYLE';
 import { DISCOUNTS_STYLE } from './DISCOUNTS_STYLE';
-
-const disabled = false;
+import { totalPriceAtom } from '../../store';
 
 const Discounts = () => {
   const itemColor = useColorModeValue('white', 'gray.900');
   const borderColor = useColorModeValue('#EDF2F7', '#1A202C');
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-
   const { isLoading, merchantData } = useMerchantInfo();
+  const getTotalPrice = useAtomValue(totalPriceAtom);
+  const disabled = getTotalPrice < merchantData.minimumOrderPrice;
 
   const initialValue = merchantData.discounts.map((d) => d.name) ?? [];
   const [checkedItems, setCheckedItems] = useState(initialValue);
@@ -82,7 +83,7 @@ const Discounts = () => {
       </Box>
       <Flex {...DISCOUNTS_STYLE.footer} bg={itemColor} borderTop={`2px solid ${borderColor}`}>
         <Button {...DISCOUNTS_STYLE.orderButton} disabled={disabled}>
-          <Text>{formattedKRWPrice(26000)}</Text>
+          <Text>{formattedKRWPrice(getTotalPrice)}</Text>
           <Text>배달 주문하기</Text>
         </Button>
       </Flex>

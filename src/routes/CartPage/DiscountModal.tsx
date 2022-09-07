@@ -51,7 +51,7 @@ const DiscountModal = ({ title, isOpen, onClose }: Props) => {
             <Checkbox isChecked={allChecked} isIndeterminate={!allChecked} defaultChecked onChange={onAllCheckedChange}>
               <Text {...CART_LIST_STYLE.itemText}>전체 선택</Text>
             </Checkbox>
-            {cartList.map((c, i) => (
+            {cartList.map((c) => (
               <ListItem key={c.name} {...COMMON_STYLE.itemWrapper} mb='30px'>
                 <Checkbox
                   value={c.name}
@@ -66,8 +66,7 @@ const DiscountModal = ({ title, isOpen, onClose }: Props) => {
                   }
                 >
                   <Text {...CART_LIST_STYLE.itemText}>{`${c.name} X ${c.quantity}`}</Text>
-                  {/* <Text>- {formattedKRWPrice(c.priceByQuantity)}</Text> */}
-                  <Text {...DISCOUNTS_STYLE.priceText}>- {formattedKRWPrice(c.price)}</Text>
+                  <Text>- {formattedKRWPrice(c.priceByQuantity!)}</Text>
                 </Checkbox>
               </ListItem>
             ))}

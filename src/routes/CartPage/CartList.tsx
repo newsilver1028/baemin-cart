@@ -1,5 +1,6 @@
 import { MouseEventHandler } from 'react';
 import { useAtom } from 'jotai';
+import produce from 'immer';
 import { Box, Button, Flex, List, ListItem, Text, useColorModeValue } from '@chakra-ui/react';
 import { CloseIcon, MinusIcon } from '@chakra-ui/icons';
 import { FaPlus } from 'react-icons/fa';
@@ -20,6 +21,35 @@ const CartList = () => {
   const onClickDelete: MouseEventHandler<HTMLButtonElement> = (e) => {
     setCartList((prev: CartState[]) => prev.filter((p) => p.name !== e.currentTarget.dataset.name));
   };
+
+  const onClickIncrease: MouseEventHandler<HTMLButtonElement> = (e) => {
+    const { name } = e.currentTarget.dataset;
+
+    setCartList((prev: CartState[]) => {
+      const nextState = produce(prev, (draft) => {
+        const selectedItem = draft.find((p) => p.name === name);
+        selectedItem!.quantity += 1;
+        if (!selectedItem!.priceByQuantity) selectedItem!.priceByQuantity = selectedItem!.price;
+        selectedItem!.priceByQuantity = selectedItem!.price * selectedItem!.quantity;
+      });
+      return nextState;
+    });
+  };
+
+  const onClickDecrease: MouseEventHandler<HTMLButtonElement> = (e) => {
+    const { name } = e.currentTarget.dataset;
+
+    setCartList((prev: CartState[]) => {
+      const nextState = produce(prev, (draft) => {
+        const selectedItem = draft.find((p) => p.name === name);
+        if (selectedItem!.quantity <= 0) return;
+        selectedItem!.quantity -= 1;
+        selectedItem!.priceByQuantity = selectedItem!.price * selectedItem!.quantity;
+      });
+      return nextState;
+    });
+  };
+
   return (
     <List {...COMMON_STYLE.itemWrapper} bg={itemColor}>
       {cartList.map((c) => (
@@ -35,13 +65,13 @@ const CartList = () => {
               {formattedKRWPrice(c.price)}
             </Text>
             <Flex {...CART_LIST_STYLE.controlWrapper} border={`2px solid ${borderColor}`}>
-              <Button {...COMMON_STYLE.button}>
+              <Button {...COMMON_STYLE.button} onClick={onClickDecrease} data-name={c.name}>
                 <MinusIcon />
               </Button>
               <Box {...CART_LIST_STYLE.quantity} border={`2px solid ${borderColor}`}>
                 {c.quantity}
               </Box>
-              <Button {...COMMON_STYLE.button}>
+              <Button {...COMMON_STYLE.button} onClick={onClickIncrease} data-name={c.name}>
                 <FaPlus />
               </Button>
             </Flex>
