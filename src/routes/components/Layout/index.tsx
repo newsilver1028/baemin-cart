@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom';
 import { MAIN_PAGE_STYLE } from '../../MainPage/MAIN_PAGE_STYLE';
 
 const Layout = () => {
-  const bg = useColorModeValue('gray.200', 'gray.800');
+  const bg = useColorModeValue('gray.200', 'gray.700');
   const appBg = useColorModeValue('gray.100', 'gray.800');
 
   return (

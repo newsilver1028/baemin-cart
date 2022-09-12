@@ -27,7 +27,7 @@ export const DISCOUNTS_STYLE = {
   },
   footer: {
     position: 'fixed',
-    bottom: '150px',
+    bottom: '0',
     px: '20px',
     w: '375px',
     h: '60px',
